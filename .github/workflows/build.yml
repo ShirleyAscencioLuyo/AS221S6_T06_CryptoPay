@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - develop #Indicamos la rama de evaluacion.
+      - develop #Indicamos la rama
   pull_request:
     types: [opened, synchronize, reopened]
 
