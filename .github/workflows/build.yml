@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - develop #Prueba 1
+      - develop
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./Dockerfile  # Asegúrate de que esta ruta sea correcta
           tags: shirleyascencio/as221s6_t06_cryptopay-frontend:latest
           push: true
 
@@ -50,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile.database
+          file: ./DockerFile.database  # Cambiar a DockerFile.database
           tags: shirleyascencio/as221s6_t06_cryptopay-database:latest
           push: true
 
