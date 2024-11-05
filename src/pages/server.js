@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000; // Permite que el puerto pueda definirse desde una variable de entorno
+app.listen(port, '0.0.0.0', () => console.log(`Servidor corriendo en el puerto ${port}`));
 const cors = require('cors');
 app.use(cors());
 
