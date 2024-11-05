@@ -27,10 +27,10 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="profile">
-        <img 
-          src={require('../../assets/profilePerson.png')} 
-          alt="User Avatar" 
-          className="profile-pic" 
+        <img
+          src={require('../../assets/profilePerson.png')}
+          alt="User Avatar"
+          className="profile-pic"
         />
         <p className="role">ENCARGADO</p>
         <h3 className="name">Usuario</h3>
@@ -43,17 +43,25 @@ const Sidebar = () => {
         <Link to="/rewards" className="menu-item"><FaAward className="icon" /> Recompensas</Link>
         <Link to="/route-monitoring" className="menu-item"><FaTachometerAlt className="icon" /> Monitoreo de Ruta</Link>
         <Link to="/schedules" className="menu-item"><FaClock className="icon" /> Horarios</Link>
-        
-        <div className="menu-item" onClick={handleSettingsSubMenuToggle}>
-          <FaCog className="icon" /> Configuración
-          <span className="arrow">{showSettingsSubMenu ? "▲" : "▼"}</span>
+
+        <div className="menu-item">
+          <button
+            onClick={handleSettingsSubMenuToggle}
+            className="settings-button"
+            aria-expanded={showSettingsSubMenu} // Para mejorar la accesibilidad
+            aria-controls="settings-submenu" // Para indicar qué parte controla
+          >
+            <FaCog className="icon" /> Configuración
+            <span className="arrow">{showSettingsSubMenu ? "▲" : "▼"}</span>
+          </button>
         </div>
         {showSettingsSubMenu && (
-          <div className="sub-menu">
+          <div className="sub-menu" id="settings-submenu"> {/* Agregar un ID para aria-controls */}
             <Link to="/profile" className="sub-menu-item">Perfil</Link>
             <a href="#logout" onClick={handleLogout} className="sub-menu-item">Salir</a>
           </div>
         )}
+
       </div>
     </div>
   );
