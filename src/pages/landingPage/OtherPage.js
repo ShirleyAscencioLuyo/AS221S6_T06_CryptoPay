@@ -10,7 +10,6 @@ const OtherPage = () => {
   const { texts, switchLanguage, language } = useLanguage();
 
   const [darkMode, setDarkMode] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -30,10 +29,7 @@ const OtherPage = () => {
   }, []);
 
   return (
-    <div
-      className={`other-page ${darkMode ? "dark-mode" : ""}`}
-      style={{ transform: `scale(${zoomLevel})` }}
-    >
+    <div className={`other-page ${darkMode ? "dark-mode" : ""}`}>
       {/* CABEZERA */}
       <header className="header">
         <div className="logo-container">

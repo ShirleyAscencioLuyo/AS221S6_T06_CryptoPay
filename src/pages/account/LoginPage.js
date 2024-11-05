@@ -33,7 +33,7 @@ function LoginPage() {
             });
             return;
         }
-    
+
         try {
             const providerData = await initializeProvider(metamaskAddress);
             if (providerData) {
@@ -73,7 +73,7 @@ function LoginPage() {
     const handleAccountSelection = (account) => {
         setSelectedAccount(account);
     };
-    
+
     const handleLogin = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
@@ -83,15 +83,15 @@ function LoginPage() {
                 },
                 body: JSON.stringify({ metamaskAddress: selectedAccount }),
             });
-    
+
             if (!response.ok) {
                 const errorResponse = await response.json();
                 throw new Error(`Error ${response.status}: ${errorResponse.message}`);
             }
-    
+
             const data = await response.json();
             console.log('Usuario encontrado:', data);
-    
+
             if (data.message === 'Inicio de sesión exitoso') {
                 localStorage.setItem('userName', selectedAccount);
                 console.log(localStorage.getItem('userName'));
@@ -114,13 +114,14 @@ function LoginPage() {
                     <div>
                         <p className="address">Dirección seleccionada: {selectedAccount}</p>
                         <ul>
-                            {accounts.map((account, index) => (
-                                <li key={index}>
+                            {accounts.map((account) => (
+                                <li key={account}>
                                     <button onClick={() => handleAccountSelection(account)}>
                                         {account}
                                     </button>
                                 </li>
                             ))}
+
                         </ul>
                     </div>
                 )}
@@ -129,7 +130,7 @@ function LoginPage() {
                 </button>
                 <p className="register-prompt">
                     ¿No tienes una cuenta? <a href="/register">Regístrate aquí</a>
-                </p>  
+                </p>
             </div>
         </div>
     );
