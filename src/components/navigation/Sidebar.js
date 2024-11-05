@@ -4,16 +4,8 @@ import { FaHome, FaTicketAlt, FaListAlt, FaAward, FaTachometerAlt, FaClock, FaCo
 import '../../styles/components/Sidebar.css';
 
 const Sidebar = () => {
-  const [userName, setUserName] = useState('');
   const [showSettingsSubMenu, setShowSettingsSubMenu] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const name = localStorage.getItem('userName');
-    if (name) {
-      setUserName(name);
-    }
-  }, []);
 
   const handleSettingsSubMenuToggle = () => {
     setShowSettingsSubMenu(!showSettingsSubMenu);
@@ -33,10 +25,9 @@ const Sidebar = () => {
           className="profile-pic"
         />
         <p className="role">ENCARGADO</p>
-        <h3 className="name">Usuario</h3>
+        {/* Aquí se elimina el nombre de usuario */}
       </div>
       <div className="menu">
-        {/* Dashboard y sus elementos directamente en el menú */}
         <Link to="/inicio" className="menu-item"><FaHome className="icon" /> Inicio</Link>
         <Link to="/purchases" className="menu-item"><FaTicketAlt className="icon" /> Compras de Pasaje</Link>
         <Link to="/transaction-details" className="menu-item"><FaListAlt className="icon" /> Detalles de la Transacción</Link>
@@ -48,20 +39,19 @@ const Sidebar = () => {
           <button
             onClick={handleSettingsSubMenuToggle}
             className="settings-button"
-            aria-expanded={showSettingsSubMenu} // Para mejorar la accesibilidad
-            aria-controls="settings-submenu" // Para indicar qué parte controla
+            aria-expanded={showSettingsSubMenu}
+            aria-controls="settings-submenu"
           >
             <FaCog className="icon" /> Configuración
             <span className="arrow">{showSettingsSubMenu ? "▲" : "▼"}</span>
           </button>
         </div>
         {showSettingsSubMenu && (
-          <div className="sub-menu" id="settings-submenu"> {/* Agregar un ID para aria-controls */}
+          <div className="sub-menu" id="settings-submenu">
             <Link to="/profile" className="sub-menu-item">Perfil</Link>
             <a href="#logout" onClick={handleLogout} className="sub-menu-item">Salir</a>
           </div>
         )}
-
       </div>
     </div>
   );
