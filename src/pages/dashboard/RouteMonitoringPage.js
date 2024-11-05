@@ -63,6 +63,17 @@ const RouteMonitoring = () => {
             <div className="route-monitoring-content">
                 <h1 className="route-monitoring-title">Monitoreo de Rutas</h1>
                 <div className="route-selector">
+                    <label htmlFor="company-select">Selecciona la Empresa:</label>
+                    <select id="company-select" value={selectedCompany} onChange={(e) => {
+                        setSelectedCompany(e.target.value);
+                        setSelectedRoute(Object.keys(routesByCompany[e.target.value])[0]); // Resetear la ruta al seleccionar empresa
+                    }}>
+                        {Object.keys(routesByCompany).map(company => (
+                            <option key={company} value={company}>{company}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="route-selector">
                     <label htmlFor="route-select">Selecciona la Ruta:</label>
                     <select id="route-select" value={selectedRoute} onChange={(e) => setSelectedRoute(e.target.value)}>
                         {Object.keys(routesByCompany[selectedCompany]).map(routeName => (
@@ -88,9 +99,9 @@ const RouteMonitoring = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {route.map((point, index) => (
-                                <tr key={index}>
-                                    <td>Ruta {index + 1}</td>
+                            {route.map((point) => (
+                                <tr key={`${point[0]},${point[1]}`}> {/* Usando las coordenadas como clave */}
+                                    <td>{`Ruta ${point[0]},${point[1]}`}</td>
                                     <td>{point[0]}, {point[1]}</td>
                                 </tr>
                             ))}

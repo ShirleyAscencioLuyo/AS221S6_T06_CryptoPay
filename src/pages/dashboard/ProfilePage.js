@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Importa PropTypes
 import Sidebar from '../../components/navigation/Sidebar';
 import Swal from 'sweetalert2';
 import '../../styles/dashboard/ProfilePage.css';
@@ -126,6 +127,11 @@ const ProfilePage = ({ userId }) => {
       </form>
     </div>
   );
+};
+
+// Validación de props
+ProfilePage.propTypes = {
+  userId: PropTypes.string.isRequired, // Se espera que userId sea un string y es obligatorio
 };
 
 export default ProfilePage;

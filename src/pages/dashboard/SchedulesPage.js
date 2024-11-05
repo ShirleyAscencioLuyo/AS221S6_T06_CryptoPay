@@ -29,8 +29,8 @@ function Schedules() {
               </tr>
             </thead>
             <tbody>
-              {schedulesData.map((schedule, index) => (
-                <tr key={index}>
+              {schedulesData.map((schedule) => (
+                <tr key={schedule.day}> {/* Usando el día como clave única */}
                   <td>{schedule.day}</td>
                   <td>{schedule.start}</td>
                   <td>{schedule.end}</td>

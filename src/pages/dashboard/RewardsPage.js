@@ -9,24 +9,23 @@ function Rewards() {
   const [referrer, setReferrer] = useState('');
   const [notification, setNotification] = useState('');
   const [contract, setContract] = useState(null);
-  const [userAddress, setUserAddress] = useState('');
 
   useEffect(() => {
     const connectToBlockchain = async () => {
       const connection = await initializeProvider();
       if (connection) {
         setContract(connection.contract);
-        setUserAddress(connection.userAddress);
-        loadUserRewards(connection.contract, connection.userAddress);
+        loadUserRewards(connection.contract);
       }
     };
     connectToBlockchain();
   }, []);
 
-  const loadUserRewards = async (contract, userAddress) => {
+  const loadUserRewards = async (contract) => {
     try {
-      const userPoints = await contract.getUserPoints(userAddress);
-      const userTotalRides = await contract.getUserTotalRides(userAddress);
+      // Asegúrate de que la función `getUserPoints` y `getUserTotalRides` pueda obtener la dirección dentro del contrato.
+      const userPoints = await contract.getUserPoints(); // Cambiado aquí
+      const userTotalRides = await contract.getUserTotalRides(); // Cambiado aquí
       setPoints(userPoints.toString());
       setTotalRides(userTotalRides.toString());
     } catch (error) {
