@@ -18,7 +18,6 @@ const PurchasesPage = () => {
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [amounts, setAmounts] = useState({});
   const [selectedNetwork, setSelectedNetwork] = useState("sepolia");
-  const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("");
   const [customContractorAddress, setCustomContractorAddress] = useState("");
 
@@ -79,7 +78,6 @@ const PurchasesPage = () => {
       const connection = await initializeProvider(customContractorAddress || DEFAULT_CONTRACT_ADDRESS);
       if (connection) {
         setContract(connection.contract);
-        setAccounts(connection.accounts || []);
         setUserAddress(connection.userAddress);
         setSelectedAccount(connection.userAddress);
       }
@@ -91,10 +89,6 @@ const PurchasesPage = () => {
     const network = e.target.value;
     setSelectedNetwork(network);
     switchNetwork(network);
-  };
-
-  const handleAccountChange = (e) => {
-    setSelectedAccount(e.target.value);
   };
 
   const busRoutes = [
@@ -126,17 +120,16 @@ const PurchasesPage = () => {
     console.log("Valor de amount:", amount); // Depuración
 
     try {
-        if (amount && !isNaN(amount) && amount > 0) {
-            await payForBusRide(contract, DEFAULT_CONTRACT_ADDRESS, amount);
-            Swal.fire("Éxito", "Pago realizado con éxito", "success");
-        } else {
-            Swal.fire("Error", "Por favor, ingrese una cantidad válida", "error");
-        }
+      if (amount && !isNaN(amount) && amount > 0) {
+        await payForBusRide(contract, DEFAULT_CONTRACT_ADDRESS, amount);
+        Swal.fire("Éxito", "Pago realizado con éxito", "success");
+      } else {
+        Swal.fire("Error", "Por favor, ingrese una cantidad válida", "error");
+      }
     } catch (error) {
-        Swal.fire("Error", "Error en el pago", "error");
+      Swal.fire("Error", "Error en el pago", "error");
     }
-};
-
+  };
 
   const checkPaymentStatus = async () => {
     if (contract && userAddress && customContractorAddress) {
@@ -194,16 +187,15 @@ const PurchasesPage = () => {
               </MapContainer>
             </div>
             <input
-    type="text"
-    placeholder="Cantidad en ETH"
-    onChange={(e) =>
-        setAmounts({
-            ...amounts,
-            [DEFAULT_CONTRACT_ADDRESS]: e.target.value,
-        })
-    }
-/>
-
+              type="text"
+              placeholder="Cantidad en ETH"
+              onChange={(e) =>
+                setAmounts({
+                  ...amounts,
+                  [DEFAULT_CONTRACT_ADDRESS]: e.target.value,
+                })
+              }
+            />
             <button onClick={() => handlePayment(route)}>
               Pagar
             </button>
