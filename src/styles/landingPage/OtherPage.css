@@ -89,6 +89,7 @@ html {
 .lang {
   font-size: var(--small-font-size);
   cursor: pointer;
+  margin: 20px 0;
 }
 
 .toggle-button {
@@ -121,10 +122,6 @@ html {
 }
 
 /* CAMBIAR IDIOMA */
-.lang {
-  margin: 20px 0;
-}
-
 .language-select {
   padding: 10px 15px;
   font-size: 16px;

@@ -1,3 +1,4 @@
+
 import React from "react";
 import "../../styles/landingPage/NavigationPages.css";
 import { useLanguage } from "./translate/LanguageContext";
@@ -27,12 +28,10 @@ const NavigationPages = () => {
         <h3 className="category">{texts.objectives.title}</h3>
         <h2 className="section-title">{texts.objectives.title}</h2>
         <div className="services-container">
-          {texts.objectives.items.map((item, index) => (
+          {texts.objectives.items.map((item) => (
             <div
-              key={index}
-              className={`service-item ${
-                item.highlighted ? "highlighted" : ""
-              }`}
+              key={item.id}  // Cambiar `index` por `item.id`
+              className={`service-item ${item.highlighted ? "highlighted" : ""}`}
             >
               <img
                 src={require(`../../assets/${item.icon}`)}
@@ -58,8 +57,8 @@ const NavigationPages = () => {
           <h3 className="features">{texts.features.subtitle}</h3>
           <h2 className="section-title">{texts.features.title}</h2>
 
-          {texts.features.items.map((item, index) => (
-            <div key={index} className="feature-item">
+          {texts.features.items.map((item) => (
+            <div key={item.id} className="feature-item">  {/* Cambiar `index` por `item.id` */}
               <img
                 src={require(`../../assets/${item.icon}`)}
                 alt={item.title}
@@ -78,8 +77,8 @@ const NavigationPages = () => {
         <h3 className="benefits">{texts.benefits.subtitle}</h3>
         <h2 className="section-title">{texts.benefits.title}</h2>
         <div className="values">
-          {texts.benefits.items.map((item, index) => (
-            <div key={index} className="value-item">
+          {texts.benefits.items.map((item) => (
+            <div key={item.id} className="value-item">  {/* Cambiar `index` por `item.id` */}
               <img
                 src={require(`../../assets/${item.icon}`)}
                 alt={item.title}
@@ -96,8 +95,8 @@ const NavigationPages = () => {
         <h3 className="team">{texts.team.subtitle}</h3>
         <h2 className="section-title">{texts.team.title}</h2>
         <div className="trip-card">
-          {texts.team.members.map((member, index) => (
-            <div key={index}>
+          {texts.team.members.map((member) => (
+            <div key={member.id}>
               <img
                 src={require(`../../assets/${member.image}`)}
                 alt={member.name}
@@ -156,8 +155,8 @@ const NavigationPages = () => {
         </div>
       </div>
 
-      {/* FOORTER SECCIÓN */}
-      <footer className="footer-container">
+{/* FOOTER SECCIÓN */}
+<footer className="footer-container">
         <div className="footer-content">
           <div className="footer-logo-section">
             <img
@@ -173,13 +172,19 @@ const NavigationPages = () => {
               <h4>{texts.footer.about}</h4>
               <ul>
                 <li>
-                  <a href="#">{texts.footer.aboutLinks.aboutCryptoPay}</a>
+                  <button className="link-button">
+                    {texts.footer.aboutLinks.aboutCryptoPay}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.aboutLinks.team}</a>
+                  <button className="link-button">
+                    {texts.footer.aboutLinks.team}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.aboutLinks.careers}</a>
+                  <button className="link-button">
+                    {texts.footer.aboutLinks.careers}
+                  </button>
                 </li>
               </ul>
             </div>
@@ -188,13 +193,19 @@ const NavigationPages = () => {
               <h4>{texts.footer.support}</h4>
               <ul>
                 <li>
-                  <a href="#">{texts.footer.supportLinks.help}</a>
+                  <button className="link-button">
+                    {texts.footer.supportLinks.help}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.supportLinks.contact}</a>
+                  <button className="link-button">
+                    {texts.footer.supportLinks.contact}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.supportLinks.reportProblem}</a>
+                  <button className="link-button">
+                    {texts.footer.supportLinks.reportProblem}
+                  </button>
                 </li>
               </ul>
             </div>
@@ -203,13 +214,19 @@ const NavigationPages = () => {
               <h4>{texts.footer.resources}</h4>
               <ul>
                 <li>
-                  <a href="#">{texts.footer.resourcesLinks.userGuide}</a>
+                  <button className="link-button">
+                    {texts.footer.resourcesLinks.userGuide}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.resourcesLinks.networkFees}</a>
+                  <button className="link-button">
+                    {texts.footer.resourcesLinks.networkFees}
+                  </button>
                 </li>
                 <li>
-                  <a href="#">{texts.footer.resourcesLinks.securityTips}</a>
+                  <button className="link-button">
+                    {texts.footer.resourcesLinks.securityTips}
+                  </button>
                 </li>
               </ul>
             </div>
