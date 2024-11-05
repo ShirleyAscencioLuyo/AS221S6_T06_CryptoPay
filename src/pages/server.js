@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 const app = express();
 const port = process.env.PORT || 5000; // Permite que el puerto pueda definirse desde una variable de entorno
-app.listen(port, '0.0.0.0', () => console.log(`Servidor corriendo en el puerto ${port}`));
-const cors = require('cors');
-app.use(cors());
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // Conexión con MongoDB
@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
     role: String, 
     contractorType: String, 
     companyName: String, 
-    carConfirmation: Boolean 
+    carConfirmation: Boolean,
+    contractAddress: String // Asegúrate de que este campo esté en el esquema
 });
 
 const User = mongoose.model('User', userSchema);
@@ -43,7 +44,7 @@ app.post('/register', async (req, res) => {
             contractorType,
             companyName,
             carConfirmation,
-            contractAddress: String 
+            contractAddress: String // Asegúrate de asignar un valor adecuado
         });
 
         await newUser.save();
@@ -56,7 +57,7 @@ app.post('/register', async (req, res) => {
 
 // Iniciar sesión
 app.post('/login', async (req, res) => {
-    const { metamaskAddress } = req.body; // Aquí asegúrate de que estás utilizando el nombre correcto
+    const { metamaskAddress } = req.body;
 
     // Verifica si el usuario existe en la base de datos
     const user = await User.findOne({ metamaskAddress });
@@ -67,7 +68,6 @@ app.post('/login', async (req, res) => {
     return res.status(200).json({ message: 'Inicio de sesión exitoso' });
 });
 
-
 app.get('/contracts/:userAddress', async (req, res) => {
     const userAddress = req.params.userAddress;
     try {
@@ -77,8 +77,7 @@ app.get('/contracts/:userAddress', async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        // Suponiendo que tienes un campo contractAddress en el modelo User
-        const contractAddress = user.contractAddress; // Asegúrate de que este campo exista
+        const contractAddress = user.contractAddress;
 
         if (!contractAddress) {
             return res.status(404).json({ message: 'Dirección de contrato no encontrada' });
@@ -90,7 +89,6 @@ app.get('/contracts/:userAddress', async (req, res) => {
         res.status(500).json({ message: 'Error al obtener la dirección del contrato' });
     }
 });
-
 
 // Obtener todos los usuarios
 app.get('/users', async (req, res) => {
@@ -126,4 +124,5 @@ app.put('/user/:metamaskAddress', async (req, res) => {
     }
 });
 
+// Iniciar el servidor
 app.listen(port, () => console.log(`Servidor corriendo en el puerto ${port}`));
