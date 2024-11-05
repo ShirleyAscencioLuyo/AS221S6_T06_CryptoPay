@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeProvider } from '../../services/MoviBusPayService';
 import Swal from 'sweetalert2';
-import '../../styles/account/LoginPage.css'; 
+import '../../styles/account/LoginPage.css';
 
 function LoginPage() {
     const [walletConnected, setWalletConnected] = useState(false);
-    const [metamaskAddress, setMetamaskAddress] = useState(''); 
+    const [metamaskAddress, setMetamaskAddress] = useState('');
     const [accounts, setAccounts] = useState([]);
-    const [selectedAccount, setSelectedAccount] = useState(''); 
-    const navigate = useNavigate(); 
+    const [selectedAccount, setSelectedAccount] = useState('');
+    const navigate = useNavigate();
 
     const alertStyles = {
         customClass: {
@@ -35,12 +35,12 @@ function LoginPage() {
         }
     
         try {
-            const providerData = await initializeProvider(metamaskAddress); // Intenta conectar MetaMask
+            const providerData = await initializeProvider(metamaskAddress);
             if (providerData) {
                 console.log("Cuentas disponibles en MetaMask:", providerData.accounts);
-                setMetamaskAddress(providerData.userAddress); 
-                setAccounts(providerData.accounts); 
-                setSelectedAccount(providerData.userAddress); 
+                setMetamaskAddress(providerData.userAddress);
+                setAccounts(providerData.accounts); // Se almacenan las cuentas
+                setSelectedAccount(providerData.userAddress);
                 setWalletConnected(true);
                 Swal.fire({
                     ...alertStyles,
@@ -69,6 +69,10 @@ function LoginPage() {
             });
         }
     };
+
+    const handleAccountSelection = (account) => {
+        setSelectedAccount(account);
+    };
     
     const handleLogin = async () => {
         try {
@@ -89,17 +93,14 @@ function LoginPage() {
             console.log('Usuario encontrado:', data);
     
             if (data.message === 'Inicio de sesión exitoso') {
-                localStorage.setItem('userName', selectedAccount); // Guarda el usuario en localStorage
-                console.log(localStorage.getItem('userName')); // Verifica que esté guardado
-                navigate('/inicio'); // Navega solo después de guardar
+                localStorage.setItem('userName', selectedAccount);
+                console.log(localStorage.getItem('userName'));
+                navigate('/inicio');
             }
         } catch (error) {
             console.error('Error en el inicio de sesión:', error);
         }
     };
-    
-      
-  
 
     return (
         <div className="login-container">
@@ -112,6 +113,15 @@ function LoginPage() {
                 {walletConnected && (
                     <div>
                         <p className="address">Dirección seleccionada: {selectedAccount}</p>
+                        <ul>
+                            {accounts.map((account, index) => (
+                                <li key={index}>
+                                    <button onClick={() => handleAccountSelection(account)}>
+                                        {account}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 )}
                 <button type="button" onClick={handleLogin} className="login-button" disabled={!walletConnected}>
